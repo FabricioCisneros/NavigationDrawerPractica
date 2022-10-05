@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="55dp">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/layoutPrincipal"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_DetailNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="NOMBRE"
+                android:textSize="25dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <Button
+                android:id="@+id/btn_entrega"
+                android:layout_marginLeft="20dp"
+                android:padding="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/ic_logo_ruta_background"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_DetailNombre"
+                android:text="Ingresa las entregas"
+                android:textSize="20dp" />
+
+            <LinearLayout
+                android:id="@+id/linearLayoutAgregar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+
+                android:background="#788774"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:textColor="@color/ic_logo_ruta_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Registrar entrega"/>
+
+                <TextView
+                    android:textColor="@color/ic_logo_ruta_background"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Frijoles con elote"
+                    android:layout_margin="5dp"/>
+
+                <EditText
+                    android:id="@+id/txtEntregaElote"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#A8C1AD"
+                    android:hint="Frijoles con elote"
+                    android:layout_margin="5dp"
+                    android:padding="10dp"
+                    android:inputType="number"
+                    android:paddingTop="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="Frijoles sin elote"
+                    android:textColor="@color/ic_logo_ruta_background" />
+
+                <EditText
+                    android:id="@+id/txtEntregaSinElote"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#A8C1AD"
+                    android:hint="Frijoles sin elote"
+                    android:layout_margin="5dp"
+                    android:padding="10dp"
+                    android:inputType="number"
+                    android:paddingTop="10dp" />
+                <Button
+                    android:id="@+id/btn_Okentrega"
+                    android:layout_margin="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="OK"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <Button
+                android:id="@+id/txtDevolucion"
+                android:layout_marginLeft="20dp"
+                android:padding="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/ic_logo_ruta_background"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_DetailNombre"
+                android:text="Ingresa las devoluciones"
+                android:textSize="17dp" />
+
+            <LinearLayout
+                android:id="@+id/linearLayoutDevoluciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@color/colorPrimary"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:textColor="@color/ic_logo_ruta_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Registrar las devoluciones"
+                    />
+
+                <TextView
+                    android:textColor="@color/ic_logo_ruta_background"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Frijoles con elote"
+                    android:layout_margin="5dp"/>
+
+                <EditText
+                    android:id="@+id/txtDevolucionesElote"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#A8C1AD"
+                    android:hint="Frijoles con elote"
+                    android:layout_margin="5dp"
+                    android:padding="10dp"
+                    android:inputType="number"
+                    android:paddingTop="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="Frijoles sin elote"
+                    android:textColor="@color/ic_logo_ruta_background" />
+
+                <EditText
+                    android:id="@+id/txtDevolucionesSinElote"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#A8C1AD"
+                    android:hint="Frijoles sin elote"
+                    android:layout_margin="5dp"
+                    android:padding="10dp"
+                    android:inputType="number"
+                    android:paddingTop="10dp" />
+                <Button
+                    android:id="@+id/btn_Okdevolucion"
+                    android:layout_margin="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="OK"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/cardview_dark_background"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+            <Button
+                android:id="@+id/btn_inventario"
+                android:padding="10dp"
+                android:layout_marginLeft="20dp"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/ic_logo_ruta_background"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_DetailNombre"
+                android:text="Ingresa el inventario"
+                android:textSize="19.5dp"/>
+            <!--Menu inventarios-->
+
+            <RelativeLayout
+                android:id="@+id/constraintLayoutInventario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@color/colorPrimary"
+                android:orientation="vertical"
+                android:paddingBottom="10dp"
+                android:visibility="gone">
+
+               <TextView
+                   android:id="@+id/textView2"
+                   android:layout_width="180dp"
+                   android:layout_height="wrap_content"
+                   android:padding="5dp"
+                   android:layout_margin="10dp"
+                   android:background="#BC1717"
+                   android:gravity="center"
+                   android:text="Lunes"
+                   android:textColor="@color/cardview_light_background"
+                   android:textSize="30dp"
+                   />
+
+                <EditText
+                    android:id="@+id/etLunes"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:background="#F1EAEA"
+                    android:inputType="number"
+                    android:gravity="center"
+                    android:minHeight="48dp"
+                    android:textColor="@color/cardview_dark_background"
+                    android:textSize="30dp"
+                    android:hint="0"
+                    android:layout_margin="10dp"
+                    android:layout_toRightOf="@id/textView2"
+                    />
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:padding="5dp"
+                    android:gravity="center"
+                    android:background="#6AF30A"
+                    android:text="Martes"
+                    android:textColor="@color/cardview_light_background"
+                    android:textColorLink="@color/cardview_dark_background"
+                    android:textSize="30dp"
+                    android:layout_below="@id/textView2"
+                    />
+                <EditText
+                    android:id="@+id/etMartes"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:background="#F1EAEA"
+                    android:inputType="number"
+                    android:minHeight="48dp"
+                    android:textColor="@color/cardview_dark_background"
+                    android:textSize="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:hint="0"
+                    android:gravity="center"
+                    android:layout_toRightOf="@id/textView3"
+                    android:layout_below="@id/etLunes"
+                    />
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:padding="5dp"
+                    android:gravity="center"
+                    android:background="#DD728B"
+                    android:text="Miercoles"
+                    android:textColor="@color/cardview_light_background"
+                    android:textSize="30dp"
+                    android:layout_below="@id/textView3"
+                    />
+
+                <EditText
+                    android:id="@+id/etMiercoles"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/etMartes"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toRightOf="@id/textView4"
+                    android:background="#F1EAEA"
+                    android:hint="0"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:minHeight="48dp"
+                    android:textColor="@color/cardview_dark_background"
+                    android:textSize="30dp" />
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:padding="5dp"
+                    android:gravity="center"
+                    android:background="#1C7FCA"
+                    android:text="Jueves"
+                    android:textColor="@color/cardview_light_background"
+                    android:textSize="30dp"
+                    android:layout_below="@id/textView4"
+                    />
+                <EditText
+                    android:id="@+id/etJueves"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:background="#F1EAEA"
+                    android:inputType="number"
+                    android:minHeight="48dp"
+                    android:gravity="center"
+                    android:textColor="@color/cardview_dark_background"
+                    android:hint="0"
+                    android:textSize="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toRightOf="@id/textView5"
+                    android:layout_below="@id/etMiercoles"
+                    />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:padding="5dp"
+                    android:gravity="center"
+                    android:background="#3809E3"
+                    android:text="Viernes"
+                    android:textColor="@color/cardview_light_background"
+                    android:textSize="30dp"
+                    android:layout_below="@id/textView5"
+                    />
+
+                <EditText
+                    android:id="@+id/etViernes"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/etJueves"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toRightOf="@id/textView6"
+                    android:background="#F1EAEA"
+                    android:gravity="center"
+                    android:hint="0"
+                    android:inputType="number"
+                    android:minHeight="48dp"
+                    android:textColor="@color/cardview_dark_background"
+                    android:textSize="30dp" />
+
+                <Button
+                    android:id="@+id/btn_OkInventario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="Ok"
+                    android:textColor="@color/cardview_light_background"
+                    android:background="@color/cardview_dark_background"
+                    android:layout_below="@+id/etViernes"/>
+
+            </RelativeLayout>
+
+       <Button
+           android:id="@+id/btn_venta"
+           android:layout_width="200dp"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center"
+           android:layout_marginBottom="20dp"
+           android:layout_marginTop="100dp"
+           android:background="@drawable/rounded_rectangle"
+
+           android:textSize="30sp"
+           android:textColor="@color/cardview_light_background"
+           android:text="Confirmar entrega"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

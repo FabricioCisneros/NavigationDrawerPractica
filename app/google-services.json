@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "130604280560",
+    "project_id": "micro-ruta-web-app",
+    "storage_bucket": "micro-ruta-web-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:130604280560:android:59de576560a8da932f7035",
+        "android_client_info": {
+          "package_name": "com.example.navigationdrawerpractica"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "130604280560-i7occlg0opasag9hetqducf3htm89h0d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCF9G3deI6kV6L5Q9VSMJRO1jsAljHGrQA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "130604280560-i7occlg0opasag9hetqducf3htm89h0d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
