@@ -11,15 +11,14 @@ import com.example.navigationdrawerpractica.Entidades.Pedido;
 import com.example.navigationdrawerpractica.R;
 
 public class PagoActivity extends AppCompatActivity {
-    public PagoActivity(Pedido p) {
-        this.p = p;
-    }
 
     Pedido p = new Pedido();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pago_activity);
-        Toast.makeText(this, " total:"+p.getTotalFrijoles(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, " total: "+p.getTotalFrijoles(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "total: "+p.getTotalFrijolesElote(), Toast.LENGTH_SHORT).show();
     }
+
 }

@@ -294,21 +294,12 @@ public class DetallePersonaFragment extends Fragment {
         return totalFrijol;
     }
 
-    String TotalCobrar(){
-        String totalCobro;
-
-        int TotalCobro =(Integer.parseInt(p.getTotalFrijoles())+(Integer.parseInt(p.getTotalFrijolesElote())));
-        totalCobro=String.valueOf(TotalCobro);
-        return totalCobro;
-    }
-
     public void EnvioDatos(){
 
         Toast.makeText(getContext(), "precio"+p.getPrecioFrijoles(), Toast.LENGTH_SHORT).show();
         Toast.makeText(getContext(), "precio"+p.getPrecioFrijolesElote(), Toast.LENGTH_SHORT).show();
         String TotalFrijol=TotalFrijol(txtEntregaSinElote.getText().toString());
         String TotalFrijolElote=TotalFrijolElote(txtEntregaElote.getText().toString());
-        String Totalcobro=TotalCobrar();
         String entregaFrijolCount=txtEntregaSinElote.getText().toString();
         String entregaFrijolEloteCount=txtEntregaSinElote.getText().toString();
         String devolucionFrijolCount=txtDevolucionesSinElote.getText().toString();
@@ -322,7 +313,6 @@ public class DetallePersonaFragment extends Fragment {
         p.setFecha(getFechaNormal(getFechaMilisegundos()));
         p.setTotalFrijoles(TotalFrijol);
         p.setTotalFrijolesElote(TotalFrijolElote);
-        p.setTotalCobro(Totalcobro);
         p.setEntregaSinELote(entregaFrijolCount);
         p.setEntregaElote(entregaFrijolEloteCount);
         p.setDevolucionSinElote(devolucionFrijolCount);
