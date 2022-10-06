@@ -48,7 +48,7 @@ import java.util.TimerTask;
 
 public class DetallePersonaFragment extends Fragment {
     TextView nombre;
-    Pedido p = new Pedido();
+
     ImageView imagen;
     Button entrega,btn_okEntrega,
             devolucionAccion,btn_okDevolucion,
@@ -61,8 +61,9 @@ public class DetallePersonaFragment extends Fragment {
     ScrollView scroll;
     EditText txtEntregaElote,txtEntregaSinElote,txtDevolucionesElote,txtDevolucionesSinElote,
               etLunes,etMartes,etMiercoles,etJueves,etViernes;
-    public String[] PrecioFrijoles = new String[1];
+    public String[] PrecioFrijoles = new String[2];
     private Handler mhandler= new Handler();
+    private String NombreCliente;
 
     @Nullable
     @Override
@@ -102,6 +103,8 @@ public class DetallePersonaFragment extends Fragment {
                 etLunes,etMartes,etMiercoles,etJueves,etViernes};
         mfirestore=FirebaseFirestore.getInstance();
 
+
+        //TOMANDO DATOS DEL PRODUCTO DESDE LA BASE DATOS
         mfirestore.collection("Producto").
                 document("Frijoles").get().
                 addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -109,24 +112,27 @@ public class DetallePersonaFragment extends Fragment {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if(documentSnapshot.exists()){
                             String preciocb=documentSnapshot.getString("precio");
-                            p.setPrecioFrijoles(preciocb);
+                            PrecioFrijoles[0]=preciocb;
                             System.out.println("precio desde el metodo "+preciocb);
                         }
                     }
                 });
+        //TOMANDO DATOS DEL PRODUCTO CON ELOTE DESDE LA BASE DE DATOS
         mfirestore.collection("Producto")
                 .document("FrijolesElote").get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        p.setPrecioFrijolesElote(documentSnapshot.getString("precio"));
+                        PrecioFrijoles[1]=documentSnapshot.getString("precio");
                     }});
+////////////////////////////////////////
 
         Bundle objetoPersona = getArguments();
         Persona persona = null;;
         if(objetoPersona !=null){
             persona = (Persona) objetoPersona.getSerializable("objeto");
             nombre.setText(persona.getNombre());
+            NombreCliente=nombre.getText().toString();
         }
         ///ACCIONES DE ENTREGAS////
         btn_okEntrega.setOnClickListener(new View.OnClickListener() {
@@ -205,12 +211,11 @@ public class DetallePersonaFragment extends Fragment {
         btn_registroVenta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btn_registroVenta.setEnabled(false);
 
-                if(ValidarCampos(campos)){
+                if(ValidarCampos(campos)==true){
                     Toast.makeText(getContext(), "faltan campos por completar", Toast.LENGTH_SHORT).show();
+
                 }else{
-                   // Toast.makeText(getContext(), "procesando pago", Toast.LENGTH_SHORT).show();
                     AlertDialog.Builder altdial= new AlertDialog.Builder(getContext());
                     altdial.setMessage("Estas seguro de mandar estos datos?").setCancelable(false).
                             setPositiveButton("Si", new DialogInterface.OnClickListener() {
@@ -263,6 +268,13 @@ public class DetallePersonaFragment extends Fragment {
     }
 
     public String getFechaNormal(long fechamilisegundos){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT-5"));
+
+        String fecha = sdf.format(fechamilisegundos);
+        return fecha;
+    }
+    public String getFechaNormalHora(long fechamilisegundos){
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         sdf.setTimeZone(TimeZone.getTimeZone("GMT-5"));
 
@@ -275,7 +287,7 @@ public class DetallePersonaFragment extends Fragment {
         int parseCountFrijol,Preciodb;
 
         parseCountFrijol=Integer.parseInt(cantidadFrijol.trim());
-        Preciodb=Integer.parseInt(p.getPrecioFrijoles().trim());
+        Preciodb=Integer.parseInt(PrecioFrijoles[0]);
 
         int integerTotal=parseCountFrijol*Preciodb;
         totalFrijol=String.valueOf(integerTotal);
@@ -287,8 +299,7 @@ public class DetallePersonaFragment extends Fragment {
         int parseCountFrijol,Preciodb;
 
         parseCountFrijol=Integer.parseInt(cantidadFrijolElote.trim());
-        Preciodb=Integer.parseInt(p.getPrecioFrijolesElote().trim());
-
+        Preciodb=Integer.parseInt(PrecioFrijoles[1]);
         int integerTotal=parseCountFrijol*Preciodb;
         totalFrijol=String.valueOf(integerTotal);
         return totalFrijol;
@@ -296,10 +307,6 @@ public class DetallePersonaFragment extends Fragment {
 
     public void EnvioDatos(){
 
-        Toast.makeText(getContext(), "precio"+p.getPrecioFrijoles(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(getContext(), "precio"+p.getPrecioFrijolesElote(), Toast.LENGTH_SHORT).show();
-        String TotalFrijol=TotalFrijol(txtEntregaSinElote.getText().toString());
-        String TotalFrijolElote=TotalFrijolElote(txtEntregaElote.getText().toString());
         String entregaFrijolCount=txtEntregaSinElote.getText().toString();
         String entregaFrijolEloteCount=txtEntregaSinElote.getText().toString();
         String devolucionFrijolCount=txtDevolucionesSinElote.getText().toString();
@@ -309,20 +316,35 @@ public class DetallePersonaFragment extends Fragment {
         String miercolesCount=etMiercoles.getText().toString();
         String juevesCount=etJueves.getText().toString();
         String viernesCount=etViernes.getText().toString();
+        String fechaPedido=getFechaNormal(getFechaMilisegundos());
+        String detalleFechaPedido=getFechaNormalHora(getFechaMilisegundos());
 
-        p.setFecha(getFechaNormal(getFechaMilisegundos()));
-        p.setTotalFrijoles(TotalFrijol);
-        p.setTotalFrijolesElote(TotalFrijolElote);
-        p.setEntregaSinELote(entregaFrijolCount);
-        p.setEntregaElote(entregaFrijolEloteCount);
-        p.setDevolucionSinElote(devolucionFrijolCount);
-        p.setDevolucionElote(devolucionFrijolEloteCount);
-        p.setInventarioLunes(lunesCount);
-        p.setInventarioMartes(martesCount);
-        p.setInventarioMiercoles(miercolesCount);
-        p.setInventarioJueves(juevesCount);
-        p.setInventarioViernes(viernesCount);
+
+        String TotalFrijol=TotalFrijol(txtEntregaSinElote.getText().toString());
+        String TotalFrijolElote=TotalFrijolElote(txtEntregaElote.getText().toString());
+        String Total=String.valueOf((Integer.parseInt(TotalFrijol))+(Integer.parseInt(TotalFrijolElote)));
+        /*
+        Toast.makeText(getContext(), "precio frijoles sin elote: "+TotalFrijol, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "precio frijole con elote: "+TotalFrijolElote, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "precio Total: "+Total, Toast.LENGTH_SHORT).show();*/
+
+
         Intent intent= new Intent(getActivity(), PagoActivity.class);
+        intent.putExtra("TotalFrijolElote",TotalFrijolElote);//
+        intent.putExtra("TotalFrijol",TotalFrijol);//
+        intent.putExtra("Total",Total);
+        intent.putExtra("EntregaFrijolElote",entregaFrijolEloteCount);//
+        intent.putExtra("EntregaFrijol", entregaFrijolCount);//
+        intent.putExtra("DevolucionFrijol",devolucionFrijolCount);//
+        intent.putExtra("DevolucionFrijolElote",devolucionFrijolEloteCount);//
+        intent.putExtra("LunesInventario",lunesCount);//
+        intent.putExtra("MartesInventario",martesCount);//
+        intent.putExtra("MiercolesInvenario",miercolesCount);//
+        intent.putExtra("JuevesInventario",juevesCount);//
+        intent.putExtra("ViernesInventario",viernesCount);//
+        intent.putExtra("FechaPedido",fechaPedido);
+        intent.putExtra("NombreCliente", NombreCliente);//
+        intent.putExtra("DetalleFechaPedido", detalleFechaPedido);//
         startActivity(intent);
     }
 }
