@@ -52,15 +52,16 @@ public class DetallePersonaFragment extends Fragment {
     ImageView imagen;
     Button entrega,btn_okEntrega,
             devolucionAccion,btn_okDevolucion,
-            btn_InventarioAccion,btn_okInventario,btn_registroVenta;
-    LinearLayout entrega_layout, devolucion_layout,layoutPrincipal;
+            btn_InventarioAccion,btn_okInventario,btn_registroVenta,btn_SobranteAccion,btn_okSobrante;
+    LinearLayout entrega_layout, devolucion_layout,layoutPrincipal,layoutSobrante;
 
     private FirebaseFirestore mfirestore;
 
     RelativeLayout inventario_layout;
     ScrollView scroll;
     EditText txtEntregaElote,txtEntregaSinElote,txtDevolucionesElote,txtDevolucionesSinElote,
-              etLunes,etMartes,etMiercoles,etJueves,etViernes;
+              etLunes,etMartes,etMiercoles,etJueves,etViernes,
+            txtSobranteFrijolElote,txtSobranteFrijol;
     public String[] PrecioFrijoles = new String[2];
     private Handler mhandler= new Handler();
     private String NombreCliente;
@@ -80,7 +81,8 @@ public class DetallePersonaFragment extends Fragment {
         etMiercoles=view.findViewById(R.id.etMiercoles);
         etJueves=view.findViewById(R.id.etJueves);
         etViernes=view.findViewById(R.id.etViernes);
-
+        txtSobranteFrijolElote = view.findViewById(R.id.txtSobranteElote);
+        txtSobranteFrijol=view.findViewById(R.id.txtSobranteSinElote);
         nombre = view.findViewById(R.id.txt_DetailNombre);
         entrega =view.findViewById(R.id.btn_entrega);
         entrega_layout=view.findViewById(R.id.linearLayoutAgregar);
@@ -89,7 +91,9 @@ public class DetallePersonaFragment extends Fragment {
         devolucion_layout=view.findViewById(R.id.linearLayoutDevoluciones);
         devolucionAccion=view.findViewById(R.id.txtDevolucion);
         btn_okDevolucion=view.findViewById(R.id.btn_Okdevolucion);
-
+        btn_SobranteAccion=view.findViewById(R.id.btn_SobranteAccion);
+        btn_okSobrante=view.findViewById(R.id.btn_OkSobrante);
+        layoutSobrante=view.findViewById(R.id.linearLayoutSobrante);
 
         inventario_layout=view.findViewById(R.id.constraintLayoutInventario);
         btn_InventarioAccion=view.findViewById(R.id.btn_inventario);
@@ -149,6 +153,7 @@ public class DetallePersonaFragment extends Fragment {
             }
         });
 
+
         ////ACCIONES DE DEVOLUCIONES//////
         btn_okDevolucion.setOnClickListener(new View.OnClickListener() {
 
@@ -177,6 +182,29 @@ public class DetallePersonaFragment extends Fragment {
                     }
                 });
 
+            }
+        });
+        ////ACCIONES DE SOBRANTES
+        btn_SobranteAccion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                layoutSobrante.setVisibility(
+                        layoutSobrante.getVisibility()==View.VISIBLE? View.GONE:View.VISIBLE);
+                scroll.post(new Runnable() {
+                    @Override
+                    public void run() {scroll.scrollTo(0,btn_SobranteAccion.getBottom());}
+                });
+            }
+        });
+        btn_okSobrante.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                layoutSobrante.setVisibility(
+                        layoutSobrante.getVisibility()==View.VISIBLE? View.GONE:View.VISIBLE);
+                scroll.post(new Runnable() {
+                    @Override
+                    public void run() {scroll.scrollTo(0,btn_SobranteAccion.getBottom());}
+                });
             }
         });
         ///ACCIONES DE INVENTARIO/////
@@ -289,7 +317,7 @@ public class DetallePersonaFragment extends Fragment {
         parseCountFrijol=Integer.parseInt(cantidadFrijol.trim());
         Preciodb=Integer.parseInt(PrecioFrijoles[0]);
 
-        int integerTotal=parseCountFrijol*Preciodb;
+        int integerTotal=(parseCountFrijol*Preciodb);
         totalFrijol=String.valueOf(integerTotal);
         return totalFrijol;
     }
@@ -298,9 +326,11 @@ public class DetallePersonaFragment extends Fragment {
         String totalFrijol;
         int parseCountFrijol,Preciodb;
 
+
         parseCountFrijol=Integer.parseInt(cantidadFrijolElote.trim());
         Preciodb=Integer.parseInt(PrecioFrijoles[1]);
-        int integerTotal=parseCountFrijol*Preciodb;
+
+        int integerTotal=(parseCountFrijol*Preciodb);
         totalFrijol=String.valueOf(integerTotal);
         return totalFrijol;
     }
@@ -311,6 +341,8 @@ public class DetallePersonaFragment extends Fragment {
         String entregaFrijolEloteCount=txtEntregaSinElote.getText().toString();
         String devolucionFrijolCount=txtDevolucionesSinElote.getText().toString();
         String devolucionFrijolEloteCount=txtDevolucionesElote.getText().toString();
+        String sobranteFrijolCount=txtSobranteFrijol.getText().toString();
+        String sobranteFrijolEloteCount=txtSobranteFrijolElote.getText().toString();
         String lunesCount=etLunes.getText().toString();
         String martesCount=etMartes.getText().toString();
         String miercolesCount=etMiercoles.getText().toString();
@@ -336,7 +368,9 @@ public class DetallePersonaFragment extends Fragment {
         intent.putExtra("EntregaFrijolElote",entregaFrijolEloteCount);//
         intent.putExtra("EntregaFrijol", entregaFrijolCount);//
         intent.putExtra("DevolucionFrijol",devolucionFrijolCount);//
-        intent.putExtra("DevolucionFrijolElote",devolucionFrijolEloteCount);//
+        intent.putExtra("DevolucionFrijolElote",devolucionFrijolEloteCount);
+        intent.putExtra("SobranteFrijol",sobranteFrijolCount);
+        intent.putExtra("SobranteFrijolElote",sobranteFrijolEloteCount);
         intent.putExtra("LunesInventario",lunesCount);//
         intent.putExtra("MartesInventario",martesCount);//
         intent.putExtra("MiercolesInvenario",miercolesCount);//

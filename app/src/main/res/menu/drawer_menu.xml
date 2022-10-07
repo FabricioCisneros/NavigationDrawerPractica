@@ -12,10 +12,6 @@
                 android:id="@+id/personas"
                 android:icon="@drawable/ic_group_black_24dp"
                 android:title="Clientes"/>
-            <item
-                android:id="@+id/venta"
-                android:icon="@drawable/ic_baseline_point_of_sale_24"
-                android:title="Generar Venta" />
         </menu>
     </item>
 

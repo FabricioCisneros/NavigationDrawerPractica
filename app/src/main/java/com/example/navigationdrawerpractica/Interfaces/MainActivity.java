@@ -63,14 +63,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.add(R.id.container_fragment,new MainFragment());
         fragmentTransaction.commit();
 
-      if(ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)!=
-              PackageManager.PERMISSION_GRANTED &&
-              ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)!=
-                PackageManager.PERMISSION_GRANTED){
-          ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1000);
-      }else{
-          Toast.makeText(this, "GPS ACTIVADO", Toast.LENGTH_SHORT).show();
-      }
 
     }
     @Override
@@ -89,9 +81,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentTransaction.replace(R.id.container_fragment,new PersonasFragment());
             fragmentTransaction.commit();
         }
-        if(menuItem.getItemId() == R.id.venta){
 
-        }
+
         return false;
     }
 
@@ -122,8 +113,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void enviarPedido(Pedido pedido){
 
     }
-
-
 
 
 }

@@ -176,6 +176,78 @@
                     android:layout_height="wrap_content"
                     android:text="OK"/>
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <Button
+                android:id="@+id/btn_SobranteAccion"
+                android:layout_marginLeft="20dp"
+                android:padding="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/ic_logo_ruta_background"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_DetailNombre"
+                android:text="Ingresa los Productos Sobrantes"
+                android:textSize="13dp"/>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutSobrante"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@color/colorPrimary"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:textColor="@color/ic_logo_ruta_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Registrar los productos sobrantes"/>
+                <TextView
+                    android:textColor="@color/ic_logo_ruta_background"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Frijoles con elote"
+                    android:layout_margin="5dp"/>
+                <EditText
+                    android:id="@+id/txtSobranteElote"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#A8C1AD"
+                    android:hint="Frijoles con elote"
+                    android:layout_margin="5dp"
+                    android:padding="10dp"
+                    android:inputType="number"
+                    android:paddingTop="10dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="Frijoles sin elote"
+                    android:textColor="@color/ic_logo_ruta_background" />
+
+                <EditText
+                    android:id="@+id/txtSobranteSinElote"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#A8C1AD"
+                    android:hint="Frijoles sin elote"
+                    android:layout_margin="5dp"
+                    android:padding="10dp"
+                    android:inputType="number"
+                    android:paddingTop="10dp" />
+                <Button
+                    android:id="@+id/btn_OkSobrante"
+                    android:layout_margin="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="OK"/>
+            </LinearLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="20dp" />
