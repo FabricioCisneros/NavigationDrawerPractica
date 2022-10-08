@@ -8,6 +8,7 @@ public class Persona implements Serializable {
     private int imagenid;
 
 
+
     public Persona(String nombre, String fechanacimiento, int imagenid) {
         this.nombre = nombre;
         this.fechanacimiento = fechanacimiento;

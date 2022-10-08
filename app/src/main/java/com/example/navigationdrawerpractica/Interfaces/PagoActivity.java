@@ -25,10 +25,12 @@ import com.example.navigationdrawerpractica.Entidades.Pedido;
 import com.example.navigationdrawerpractica.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.common.collect.Range;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,6 +46,9 @@ public class PagoActivity extends AppCompatActivity {
     double LatitudCliente=20.73524270248981,LongitudCliente=-103.41223790359507,LatitudActual,LongitudActual;
     Range<Double> rangeLat = Range.open(LatitudCliente-.0002, LatitudCliente+.0002);
     Range<Double> rangeLong = Range.open(LongitudCliente-.0002, LongitudCliente+.0002);
+    int timeint = (int) (System.currentTimeMillis());
+    Date time = new Date(timeint);
+    Timestamp tiempo = new Timestamp(time);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -108,7 +113,7 @@ public class PagoActivity extends AppCompatActivity {
         detalleVenta.put("frijolesEloteSobrantes", Integer.parseInt(datos.getString("SobranteFrijolElote")));
         detalleVenta.put("TotalFrijol", Integer.parseInt(datos.getString("TotalFrijol")));
         detalleVenta.put("TotalFrijolElote", Integer.parseInt(datos.getString("TotalFrijolElote")));
-        detalleVenta.put("fecha", datos.getString("DetalleFechaPedido"));
+        detalleVenta.put("fecha", tiempo);
         Map<String, Object> Inventario = new HashMap<>();
         Inventario.put("lunes",Integer.parseInt(datos.getString("LunesInventario")));
         Inventario.put("martes", Integer.parseInt(datos.getString("MartesInventario")));

@@ -110,9 +110,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //***Luego pasar a programar al fragmentdetalle
     }
 
-    public void enviarPedido(Pedido pedido){
-
-    }
 
 
 }
