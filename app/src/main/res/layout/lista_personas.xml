@@ -1,48 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="3dp"
-    app:cardElevation="3dp"
+    android:layout_margin="5dp"
+    android:orientation="vertical"
+
+    app:cardBackgroundColor="#1998CA"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="20dp"
     app:cardUseCompatPadding="true">
 
     <RelativeLayout
+        android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp">
 
+        <TextView
+            android:id="@+id/nombres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="#FFF"
+            android:text="Nombre de la Persona"
+            android:textSize="20sp"
+            android:textStyle="bold"></TextView>
+
+        <TextView
+            android:id="@+id/fechanacimiento"
+            android:layout_width="wrap_content"
+            android:textColor="#FFF"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nombres"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="2020-01-20"
+            android:textSize="17sp"></TextView>
+
+        <TextView
+            android:id="@+id/latitud"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fechanacimiento"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:visibility="invisible"
+            android:text="latitud"></TextView>
+
+        <TextView
+            android:id="@+id/longitud"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fechanacimiento"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@+id/latitud"
+            android:visibility="invisible"
+            android:text="longitud"></TextView>
+
+        <TextView
+            android:id="@+id/entregable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/latitud"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="#FFF"
+            android:text="entregable"
+            android:visibility="visible"></TextView>
+
+        <TextView
+            android:id="@+id/index"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/entregable"
+            android:layout_below="@+id/latitud"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="entregable"
+            android:visibility="invisible"></TextView>
+
         <ImageView
-            android:id="@+id/imagen_persona"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/gohan_cara1">
+            android:id="@+id/ic_pedido"
+            android:layout_width="44dp"
+            android:layout_height="48dp"
 
-        </ImageView>
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="17dp"
+            app:srcCompat="@drawable/ic_baseline_point_of_sale_24" />
 
-    <TextView
-        android:id="@+id/nombres"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nombre de la Persona"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_toRightOf="@id/imagen_persona"
-        android:layout_toEndOf="@id/imagen_persona"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp">
-    </TextView>
-
-    <TextView
-        android:id="@+id/fechanacimiento"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2020-01-20"
-        android:layout_toRightOf="@id/imagen_persona"
-        android:layout_toEndOf="@id/imagen_persona"
-        android:layout_below="@+id/nombres"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp">
-    </TextView>
     </RelativeLayout>
+
 </androidx.cardview.widget.CardView>

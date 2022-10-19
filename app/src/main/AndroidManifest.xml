@@ -14,12 +14,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".Interfaces.MainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Interfaces.StockActivity"
+            android:exported="false"
+            android:label="StockActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".Interfaces.PagoActivity"
             android:exported="false"
             android:label="@string/title_activity_pago"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Interfaces.MainActivity"
+            android:name=".Interfaces.LoginActivity"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

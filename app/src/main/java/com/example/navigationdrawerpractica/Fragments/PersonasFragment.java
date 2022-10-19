@@ -18,22 +18,36 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.navigationdrawerpractica.Adaptadores.AdapterPersonas;
 import com.example.navigationdrawerpractica.Entidades.Persona;
+import com.example.navigationdrawerpractica.Interfaces.MainActivity;
 import com.example.navigationdrawerpractica.Interfaces.iComunicaFragments;
 import com.example.navigationdrawerpractica.R;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.Normalizer;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class PersonasFragment extends Fragment {
 
     //private OnFragmentInteractionListener mListener;
-
-
+    public int cont=0;
+    Persona persona;
     AdapterPersonas adapterPersonas;
     RecyclerView recyclerViewPersonas;
     ArrayList<Persona> listaPersonas;
-
+    FirebaseFirestore firestore;
+    String dayOfWeek;
     EditText txtnombre;
-
     //Crear referencias para poder realizar la comunicacion entre el fragment detalle
     Activity actividad;
     iComunicaFragments interfaceComunicaFragments;
@@ -44,40 +58,50 @@ public class PersonasFragment extends Fragment {
         View view = inflater.inflate(R.layout.personas_fragment,container,false);
         txtnombre = view.findViewById(R.id.txtnombre);
         recyclerViewPersonas = view.findViewById(R.id.recyclerView);
+        firestore=FirebaseFirestore.getInstance();
+        getDayOfWeek();
+        dayOfWeek=quitaDiacriticos(dayOfWeek);
         listaPersonas = new ArrayList<>();
-        cargarLista();
         mostrarData();
         return view;
     }
-    public void cargarLista(){
-        listaPersonas.add(new Persona("Gohan","31-05-1994",R.drawable.gohan_cara1));
-        listaPersonas.add(new Persona("Goku","31-05-1994",R.drawable.goku_cara2));
-        listaPersonas.add(new Persona("Goten","31-05-1994",R.drawable.goten_cara3));
-        listaPersonas.add(new Persona("Krilin","31-05-1994",R.drawable.krilin_cara4));
-        listaPersonas.add(new Persona("Picoro","31-05-1994",R.drawable.picoro_cara5));
-        listaPersonas.add(new Persona("Trunks","31-05-1994",R.drawable.trunks_cara6));
-        listaPersonas.add(new Persona("Vegueta","31-05-1994",R.drawable.vegueta_cara7));
-    }
     private void mostrarData(){
         recyclerViewPersonas.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapterPersonas = new AdapterPersonas(getContext(), listaPersonas);
+        Query query= firestore.collection(dayOfWeek).orderBy("ordenEntrega");
+        FirestoreRecyclerOptions<Persona> firestoreRecyclerOptions= new FirestoreRecyclerOptions.Builder<Persona>()
+                .setQuery(query, Persona.class).build();
+        adapterPersonas = new AdapterPersonas(firestoreRecyclerOptions, getActivity().getSupportFragmentManager());
+        adapterPersonas.notifyDataSetChanged();
         recyclerViewPersonas.setAdapter(adapterPersonas);
-
-        adapterPersonas.setOnclickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               String nombre = listaPersonas.get(recyclerViewPersonas.getChildAdapterPosition(view)).getNombre();
-               txtnombre.setText(nombre);
-               Toast.makeText(getContext(), "Seleccionó: "+listaPersonas.get(recyclerViewPersonas.getChildAdapterPosition(view)).getNombre(), Toast.LENGTH_SHORT).show();
-                //enviar mediante la interface el objeto seleccionado al detalle
-                //se envia el objeto completo
-                //se utiliza la interface como puente para enviar el objeto seleccionado
-                interfaceComunicaFragments.enviarPersona(listaPersonas.get(recyclerViewPersonas.getChildAdapterPosition(view)));
-                //luego en el mainactivity se hace la implementacion de la interface para implementar el metodo enviarpersona
-            }
-        });
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapterPersonas.startListening();
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapterPersonas.stopListening();
+    }
+    public static String upperCaseFirst(String val) {
+        char[] arr = val.toCharArray();
+        arr[0] = Character.toUpperCase(arr[0]);
+        return new String(arr);
+    }
+    public void getDayOfWeek(){
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
+        Date d = new Date();
+        dayOfWeek = upperCaseFirst(sdf.format(d));
+    }
+    public static String quitaDiacriticos(String s) {
+        s = Normalizer.normalize(s, Normalizer.Form.NFD);
+        s = s.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+        return s;
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

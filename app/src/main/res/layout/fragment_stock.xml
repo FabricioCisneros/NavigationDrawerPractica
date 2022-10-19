@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="55dp"
+    tools:context=".Fragments.StockFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView30"
+            android:layout_margin="11dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="Stock Inicial Frijoles con elote" />
+
+        <TextView
+            android:id="@+id/textView31"
+            android:layout_margin="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="Stock Inicial Frijoles sin elote" />
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_margin="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="Frijoles con elote en stock" />
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_margin="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="Frijoles sin elote en stock" />
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_margin="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="Devoluciones Frijoles con elote" />
+
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="Devoluciones Frijoles sin elote" />
+
+        <TextView
+            android:id="@+id/textView21"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="Entregas Frijoles con elote"
+            />
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="Entregas Frijoles sin elote"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtInicialFrijolElote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_margin="10dp"
+            android:text="-" />
+
+        <TextView
+            android:id="@+id/txtInicialFrijol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_margin="10dp"
+            android:text="-"
+            />
+
+        <TextView
+            android:id="@+id/txtstockConElote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_margin="11dp"
+            android:text="-" />
+
+        <TextView
+            android:id="@+id/txtstockSinElote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_margin="11dp"
+            android:text="-"/>
+
+        <TextView
+            android:id="@+id/txtDevolucionesElote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_margin="12dp"
+            android:text="-" />
+
+        <TextView
+            android:id="@+id/txtDevolucionesSinElote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_margin="12dp"
+            android:text="-" />
+
+        <TextView
+            android:id="@+id/txtEntregaElote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_margin="12dp"
+            android:text="-" />
+
+        <TextView
+            android:id="@+id/txtEntregaSinElote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_margin="12dp"
+            android:text="-"/>
+    </LinearLayout>
+
+</LinearLayout>

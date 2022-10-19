@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
@@ -22,9 +23,11 @@ import android.widget.Toast;
 
 import com.example.navigationdrawerpractica.Entidades.Pedido;
 import com.example.navigationdrawerpractica.Entidades.Persona;
+import com.example.navigationdrawerpractica.Fragments.CorteFragment;
 import com.example.navigationdrawerpractica.Fragments.DetallePersonaFragment;
 import com.example.navigationdrawerpractica.Fragments.MainFragment;
 import com.example.navigationdrawerpractica.Fragments.PersonasFragment;
+import com.example.navigationdrawerpractica.Fragments.StockFragment;
 import com.example.navigationdrawerpractica.R;
 import com.google.android.material.navigation.NavigationView;
 
@@ -34,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
     NavigationView navigationView;
-
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
     //variable del fragment detalle
@@ -72,15 +74,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(menuItem.getItemId() == R.id.home){
             fragmentManager = getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.replace(R.id.container_fragment,new MainFragment());
             fragmentTransaction.commit();
         }
         if(menuItem.getItemId() == R.id.personas){
             fragmentManager = getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.replace(R.id.container_fragment,new PersonasFragment());
             fragmentTransaction.commit();
         }
+        if(menuItem.getItemId()==R.id.stock){
+            fragmentManager = getSupportFragmentManager();
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.replace(R.id.container_fragment,new StockFragment());
+            fragmentTransaction.commit();
+        }
+        if(menuItem.getItemId()==R.id.corte){
+            fragmentManager = getSupportFragmentManager();
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.replace(R.id.container_fragment,new CorteFragment());
+            fragmentTransaction.commit();
+        }
+
 
 
         return false;

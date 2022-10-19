@@ -27,6 +27,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.example.navigationdrawerpractica.Entidades.Pedido;
@@ -40,37 +41,50 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class DetallePersonaFragment extends Fragment {
+public class DetallePersonaFragment extends DialogFragment {
     TextView nombre;
 
     ImageView imagen;
     Button entrega,btn_okEntrega,
             devolucionAccion,btn_okDevolucion,
-            btn_InventarioAccion,btn_okInventario,btn_registroVenta,btn_SobranteAccion,btn_okSobrante;
-    LinearLayout entrega_layout, devolucion_layout,layoutPrincipal,layoutSobrante;
+            btn_InventarioAccion,btn_okInventario,btn_registroVenta;
+
+    LinearLayout entrega_layout, devolucion_layout,layoutPrincipal;
 
     private FirebaseFirestore mfirestore;
-
+    String dayOfWeek;
     RelativeLayout inventario_layout;
     ScrollView scroll;
     EditText txtEntregaElote,txtEntregaSinElote,txtDevolucionesElote,txtDevolucionesSinElote,
-              etLunes,etMartes,etMiercoles,etJueves,etViernes,
-            txtSobranteFrijolElote,txtSobranteFrijol;
+              etLunes,etMartes,etMiercoles,etJueves,etViernes;
     public String[] PrecioFrijoles = new String[2];
     private Handler mhandler= new Handler();
-    private String NombreCliente;
+    private String NombreCliente,latitud,longitud;
+    boolean entregable;
+    String id_persona,id_sigPersona;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getDayOfWeek();
+        dayOfWeek= quitaDiacriticos(dayOfWeek);
+        if(getArguments()!=null){
+            id_persona=getArguments().getString("id_persona");
+            id_sigPersona=getArguments().getString("id_sigPersona");
+        }
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.detalle_persona_fragment,container,false);
-
 
         txtEntregaElote=view.findViewById(R.id.txtEntregaElote);
         txtEntregaSinElote=view.findViewById(R.id.txtEntregaSinElote);
@@ -81,8 +95,6 @@ public class DetallePersonaFragment extends Fragment {
         etMiercoles=view.findViewById(R.id.etMiercoles);
         etJueves=view.findViewById(R.id.etJueves);
         etViernes=view.findViewById(R.id.etViernes);
-        txtSobranteFrijolElote = view.findViewById(R.id.txtSobranteElote);
-        txtSobranteFrijol=view.findViewById(R.id.txtSobranteSinElote);
         nombre = view.findViewById(R.id.txt_DetailNombre);
         entrega =view.findViewById(R.id.btn_entrega);
         entrega_layout=view.findViewById(R.id.linearLayoutAgregar);
@@ -91,9 +103,6 @@ public class DetallePersonaFragment extends Fragment {
         devolucion_layout=view.findViewById(R.id.linearLayoutDevoluciones);
         devolucionAccion=view.findViewById(R.id.txtDevolucion);
         btn_okDevolucion=view.findViewById(R.id.btn_Okdevolucion);
-        btn_SobranteAccion=view.findViewById(R.id.btn_SobranteAccion);
-        btn_okSobrante=view.findViewById(R.id.btn_OkSobrante);
-        layoutSobrante=view.findViewById(R.id.linearLayoutSobrante);
 
         inventario_layout=view.findViewById(R.id.constraintLayoutInventario);
         btn_InventarioAccion=view.findViewById(R.id.btn_inventario);
@@ -129,15 +138,20 @@ public class DetallePersonaFragment extends Fragment {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         PrecioFrijoles[1]=documentSnapshot.getString("precio");
                     }});
-////////////////////////////////////////
+       ////OBTENER DATOS DE CLIENTE//////
+        mfirestore.collection(dayOfWeek)
+                .document(id_persona).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        NombreCliente=documentSnapshot.getString("nombre");
+                        latitud=String.valueOf(documentSnapshot.getLong("lat"));
+                        longitud=String.valueOf(documentSnapshot.getLong("longitud"));
+                        entregable=documentSnapshot.getBoolean("entregable");
+                        nombre.setText(NombreCliente);
+                    }
+                });
 
-        Bundle objetoPersona = getArguments();
-        Persona persona = null;;
-        if(objetoPersona !=null){
-            persona = (Persona) objetoPersona.getSerializable("objeto");
-            nombre.setText(persona.getNombre());
-            NombreCliente=nombre.getText().toString();
-        }
+
         ///ACCIONES DE ENTREGAS////
         btn_okEntrega.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,29 +196,6 @@ public class DetallePersonaFragment extends Fragment {
                     }
                 });
 
-            }
-        });
-        ////ACCIONES DE SOBRANTES
-        btn_SobranteAccion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                layoutSobrante.setVisibility(
-                        layoutSobrante.getVisibility()==View.VISIBLE? View.GONE:View.VISIBLE);
-                scroll.post(new Runnable() {
-                    @Override
-                    public void run() {scroll.scrollTo(0,btn_SobranteAccion.getBottom());}
-                });
-            }
-        });
-        btn_okSobrante.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                layoutSobrante.setVisibility(
-                        layoutSobrante.getVisibility()==View.VISIBLE? View.GONE:View.VISIBLE);
-                scroll.post(new Runnable() {
-                    @Override
-                    public void run() {scroll.scrollTo(0,btn_SobranteAccion.getBottom());}
-                });
             }
         });
         ///ACCIONES DE INVENTARIO/////
@@ -272,7 +263,6 @@ public class DetallePersonaFragment extends Fragment {
     private Runnable WaitEnvioDatos =new Runnable() {
         @Override
         public void run() {
-
             EnvioDatos();
         }
     };
@@ -298,39 +288,38 @@ public class DetallePersonaFragment extends Fragment {
     public String getFechaNormal(long fechamilisegundos){
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         sdf.setTimeZone(TimeZone.getTimeZone("GMT-5"));
-
         String fecha = sdf.format(fechamilisegundos);
         return fecha;
     }
     public String getFechaNormalHora(long fechamilisegundos){
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         sdf.setTimeZone(TimeZone.getTimeZone("GMT-5"));
-
         String fecha = sdf.format(fechamilisegundos);
         return fecha;
     }
 
-    String TotalFrijol (String cantidadFrijol){
+    String TotalFrijol (String cantidadFrijol, String devolucionFrijoles){
         String totalFrijol;
-        int parseCountFrijol,Preciodb;
+        int parseCountFrijol,Preciodb,parseCountDevolucionFrijol;
 
+        parseCountDevolucionFrijol=Integer.parseInt(devolucionFrijoles);
         parseCountFrijol=Integer.parseInt(cantidadFrijol.trim());
         Preciodb=Integer.parseInt(PrecioFrijoles[0]);
 
-        int integerTotal=(parseCountFrijol*Preciodb);
+        int integerTotal=((parseCountFrijol*Preciodb)-(parseCountDevolucionFrijol*Preciodb));
         totalFrijol=String.valueOf(integerTotal);
         return totalFrijol;
     }
 
-    String TotalFrijolElote(String cantidadFrijolElote){
+    String TotalFrijolElote(String cantidadFrijolElote, String devolucionFrijoles){
         String totalFrijol;
-        int parseCountFrijol,Preciodb;
+        int parseCountFrijol,Preciodb,parseCountDevolucionFrijol;
 
-
+        parseCountDevolucionFrijol=Integer.parseInt(devolucionFrijoles);
         parseCountFrijol=Integer.parseInt(cantidadFrijolElote.trim());
         Preciodb=Integer.parseInt(PrecioFrijoles[1]);
 
-        int integerTotal=(parseCountFrijol*Preciodb);
+        int integerTotal=((parseCountFrijol*Preciodb)-(parseCountDevolucionFrijol*Preciodb));
         totalFrijol=String.valueOf(integerTotal);
         return totalFrijol;
     }
@@ -338,11 +327,9 @@ public class DetallePersonaFragment extends Fragment {
     public void EnvioDatos(){
 
         String entregaFrijolCount=txtEntregaSinElote.getText().toString();
-        String entregaFrijolEloteCount=txtEntregaSinElote.getText().toString();
+        String entregaFrijolEloteCount=txtEntregaElote.getText().toString();
         String devolucionFrijolCount=txtDevolucionesSinElote.getText().toString();
         String devolucionFrijolEloteCount=txtDevolucionesElote.getText().toString();
-        String sobranteFrijolCount=txtSobranteFrijol.getText().toString();
-        String sobranteFrijolEloteCount=txtSobranteFrijolElote.getText().toString();
         String lunesCount=etLunes.getText().toString();
         String martesCount=etMartes.getText().toString();
         String miercolesCount=etMiercoles.getText().toString();
@@ -350,10 +337,10 @@ public class DetallePersonaFragment extends Fragment {
         String viernesCount=etViernes.getText().toString();
         String fechaPedido=getFechaNormal(getFechaMilisegundos());
         String detalleFechaPedido=getFechaNormalHora(getFechaMilisegundos());
+        Toast.makeText(getContext(), detalleFechaPedido, Toast.LENGTH_SHORT).show();
 
-
-        String TotalFrijol=TotalFrijol(txtEntregaSinElote.getText().toString());
-        String TotalFrijolElote=TotalFrijolElote(txtEntregaElote.getText().toString());
+        String TotalFrijol=TotalFrijol(txtEntregaSinElote.getText().toString(),txtDevolucionesSinElote.getText().toString());
+        String TotalFrijolElote=TotalFrijolElote(txtEntregaElote.getText().toString(),txtDevolucionesElote.getText().toString());
         String Total=String.valueOf((Integer.parseInt(TotalFrijol))+(Integer.parseInt(TotalFrijolElote)));
         /*
         Toast.makeText(getContext(), "precio frijoles sin elote: "+TotalFrijol, Toast.LENGTH_SHORT).show();
@@ -362,23 +349,42 @@ public class DetallePersonaFragment extends Fragment {
 
 
         Intent intent= new Intent(getActivity(), PagoActivity.class);
-        intent.putExtra("TotalFrijolElote",TotalFrijolElote);//
-        intent.putExtra("TotalFrijol",TotalFrijol);//
-        intent.putExtra("Total",Total);
-        intent.putExtra("EntregaFrijolElote",entregaFrijolEloteCount);//
-        intent.putExtra("EntregaFrijol", entregaFrijolCount);//
-        intent.putExtra("DevolucionFrijol",devolucionFrijolCount);//
-        intent.putExtra("DevolucionFrijolElote",devolucionFrijolEloteCount);
-        intent.putExtra("SobranteFrijol",sobranteFrijolCount);
-        intent.putExtra("SobranteFrijolElote",sobranteFrijolEloteCount);
+        intent.putExtra("totalFrijolElote",TotalFrijolElote);//
+        intent.putExtra("totalFrijol",TotalFrijol);//
+        intent.putExtra("total",Total);
+        intent.putExtra("entregaFrijolElote",entregaFrijolEloteCount);//
+        intent.putExtra("entregaFrijol", entregaFrijolCount);//
+        intent.putExtra("devolucionFrijol",devolucionFrijolCount);//
+        intent.putExtra("devolucionFrijolElote",devolucionFrijolEloteCount);
         intent.putExtra("LunesInventario",lunesCount);//
         intent.putExtra("MartesInventario",martesCount);//
         intent.putExtra("MiercolesInvenario",miercolesCount);//
         intent.putExtra("JuevesInventario",juevesCount);//
         intent.putExtra("ViernesInventario",viernesCount);//
-        intent.putExtra("FechaPedido",fechaPedido);
-        intent.putExtra("NombreCliente", NombreCliente);//
-        intent.putExtra("DetalleFechaPedido", detalleFechaPedido);//
+        intent.putExtra("fechaPedido",fechaPedido);
+        intent.putExtra("nombreCliente", NombreCliente);//
+        intent.putExtra("detalleFechaPedido", detalleFechaPedido);//
+        intent.putExtra("latitud",latitud);
+        intent.putExtra("longitud",longitud);
+        intent.putExtra("entregable",String.valueOf(entregable));
+        intent.putExtra("id_persona",id_persona);
+        intent.putExtra("id_sigPersona",id_sigPersona);
         startActivity(intent);
+    }
+    public static String upperCaseFirst(String val) {
+        char[] arr = val.toCharArray();
+        arr[0] = Character.toUpperCase(arr[0]);
+        return new String(arr);
+    }
+
+    public void getDayOfWeek(){
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
+        Date d = new Date();
+        dayOfWeek = upperCaseFirst(sdf.format(d));
+    }
+    public static String quitaDiacriticos(String s) {
+        s = Normalizer.normalize(s, Normalizer.Form.NFD);
+        s = s.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+        return s;
     }
 }

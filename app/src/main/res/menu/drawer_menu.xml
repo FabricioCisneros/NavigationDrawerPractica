@@ -12,6 +12,16 @@
                 android:id="@+id/personas"
                 android:icon="@drawable/ic_group_black_24dp"
                 android:title="Clientes"/>
+
+            <item
+                android:id="@+id/stock"
+                android:icon="@drawable/ic_baseline_inventory_24"
+                android:title="Stock"/>
+
+            <item
+                android:id="@+id/corte"
+                android:icon="@drawable/ic_baseline_monetization_on_24"
+                android:title="Corte"/>
         </menu>
     </item>
 
